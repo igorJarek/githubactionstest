@@ -45,7 +45,7 @@ if (WITH_TESTS)
 endif()
 
 if (WITH_TESTS)
-    add_qtc_test(Test
+    add_qtc_test(TestTest
       DEPENDS Qt6::Core
       SOURCES tests/test.cpp
     )
