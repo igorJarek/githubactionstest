@@ -281,13 +281,13 @@ jobs:
 
         message("result : ${result}")
         message("output : ${output}")
-        message("output : ${ECHO_ERROR_VARIABLE}")
+        message("ECHO_ERROR_VARIABLE : ${ECHO_ERROR_VARIABLE}")
 
         if (NOT result EQUAL 0)
           string(REGEX MATCH "[0-9]+% tests.*[0-9.]+ sec.*$" test_results "${output}")
           string(REPLACE "\n" "%0A" test_results "${test_results}")
           # Do not fail on ctest failure
-          message(FATAL_ERROR "::warning::${test_results}")
+          message(FATAL_ERROR "test_results : ${test_results}")
         endif()
 
     - uses: actions/upload-artifact@v2
