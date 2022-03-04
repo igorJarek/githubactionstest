@@ -1,6 +1,6 @@
 #include <QTest>
 
-class Test: public QObject
+class TestCase: public QObject
 {
     Q_OBJECT
 private slots:
@@ -16,6 +16,6 @@ private slots:
     }
 };
 
-QTEST_MAIN(Test)
+QTEST_MAIN(TestCase)
 
 #include "test.moc"
