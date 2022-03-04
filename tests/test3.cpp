@@ -6,13 +6,7 @@ class TestCase3: public QObject
 private slots:
     void success()
     {
-        QString str = "Hello";
-        QVERIFY(str.toUpper() == "HELLO");
-    }
-
-    void failure()
-    {
-        QVERIFY(1 == 2);
+        QVERIFY(1 == 1);
     }
 };
 
