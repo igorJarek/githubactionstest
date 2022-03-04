@@ -239,8 +239,6 @@ jobs:
           endif()
         endforeach()
 
-        set(WITH_TESTS ON)
-
         execute_process(
           COMMAND python
             -u
@@ -251,6 +249,8 @@ jobs:
             --qt-path "${{ steps.qt.outputs.qt_dir }}"
             --qtc-path "${{ steps.qt_creator.outputs.qtc_dir }}"
             --output-path "$ENV{GITHUB_WORKSPACE}"
+            --add-config=-DWITH_TESTS=ON
+            --build-type=Release
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)
