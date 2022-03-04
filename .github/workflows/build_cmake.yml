@@ -261,7 +261,6 @@ jobs:
         endif()
 
     - name: Run tests
-      if: matrix.config.artifact == 'running-of-tests-is-disabled'
       shell: cmake -P {0}
       run: |
         include(ProcessorCount)
