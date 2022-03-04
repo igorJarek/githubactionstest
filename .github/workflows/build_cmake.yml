@@ -274,13 +274,14 @@ jobs:
           WORKING_DIRECTORY build/build
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
-          ERROR_VARIABLE output
+          ERROR_VARIABLE error
           ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
           TIMEOUT 600
         )
 
-        message("RESULT -->> ${result} <<--")
-        message("OUTPUT -->> ${output} <<--")
+        message("RESULT -->>${result}<<--")
+        message("OUTPUT -->>${output}<<--")
+        message("OUTPUT -->>${error}<<--")
         message("ECHO_ERROR_VARIABLE -->> ${ECHO_ERROR_VARIABLE} <<--")
 
         if (NOT result EQUAL 0)
