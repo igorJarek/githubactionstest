@@ -43,16 +43,6 @@ add_qtc_plugin(Githubactionstest
     githubactionstestconstants.h
 )
 
-add_qtc_test(tst_filesearch
-  DEPENDS Utils
-  SOURCES
-    tst_filesearch.cpp
-    tst_filesearch.qrc
-)
-
 if (WITH_TESTS)
-    add_qtc_test(TestCase
-      DEPENDS Qt6::Core
-      SOURCES test.cpp
-    )
+    add_subdirectory(tests)
 endif()
