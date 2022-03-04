@@ -250,7 +250,7 @@ jobs:
             --qtc-path "${{ steps.qt_creator.outputs.qtc_dir }}"
             --output-path "$ENV{GITHUB_WORKSPACE}"
             --add-config=-DWITH_TESTS=ON
-            --build-type=Release
+            --build-type=Debug
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)
