@@ -279,9 +279,9 @@ jobs:
           TIMEOUT 600
         )
 
-        message("result : ${result}")
-        message("output : ${output}")
-        message("ECHO_ERROR_VARIABLE : ${ECHO_ERROR_VARIABLE}")
+        message("RESULT -->> ${result} <<--")
+        message("OUTPUT -->> ${output} <<--")
+        message("ECHO_ERROR_VARIABLE -->> ${ECHO_ERROR_VARIABLE} <<--")
 
         if (NOT result EQUAL 0)
           string(REGEX MATCH "[0-9]+% tests.*[0-9.]+ sec.*$" test_results "${output}")
