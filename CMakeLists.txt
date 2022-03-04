@@ -11,19 +11,26 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(QtCreator COMPONENTS Core REQUIRED)
-find_package(Qt6 COMPONENTS Test REQUIRED)
+find_package(Qt5 COMPONENTS Test REQUIRED)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 set(QtX Qt${QT_VERSION_MAJOR})
 
 option(WITH_TESTS "Build Tests" OFF)
 add_feature_info("Build tests" ${WITH_TESTS} "")
 
+if (WITH_TESTS)
+    set(IMPLICIT_DEPENDS Qt5::Test)
+endif()
+
+if (WITH_TESTS)
+  enable_testing()
+endif()
+
 add_qtc_plugin(Githubactionstest
   PLUGIN_DEPENDS
     QtCreator::Core
   DEPENDS
     ${QtX}::Widgets
-    Qt6::Test
     QtCreator::ExtensionSystem
     QtCreator::Utils
   SOURCES
@@ -36,17 +43,16 @@ add_qtc_plugin(Githubactionstest
     githubactionstestconstants.h
 )
 
-if (WITH_TESTS)
-  set(IMPLICIT_DEPENDS Qt6::Test)
-endif()
+add_qtc_test(tst_filesearch
+  DEPENDS Utils
+  SOURCES
+    tst_filesearch.cpp
+    tst_filesearch.qrc
+)
 
 if (WITH_TESTS)
-  enable_testing()
-endif()
-
-if (WITH_TESTS)
-    add_qtc_test(TestTest
+    add_qtc_test(TestCase
       DEPENDS Qt6::Core
-      SOURCES tests/test.cpp
+      SOURCES test.cpp
     )
 endif()
