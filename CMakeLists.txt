@@ -23,6 +23,7 @@ add_qtc_plugin(Githubactionstest
     QtCreator::Core
   DEPENDS
     ${QtX}::Widgets
+    Qt6::Test
     QtCreator::ExtensionSystem
     QtCreator::Utils
   SOURCES
@@ -43,6 +44,7 @@ if (WITH_TESTS)
   enable_testing()
 endif()
 
-if (WITH_TESTS)
-  add_subdirectory(tests)
-endif()
+extend_qtc_plugin(Githubactionstest
+  CONDITION WITH_TESTS
+  SOURCES tests/test.cpp
+  )

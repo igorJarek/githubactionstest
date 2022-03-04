@@ -239,12 +239,7 @@ jobs:
           endif()
         endforeach()
 
-        find_package(Python3 REQUIRED COMPONENTS Interpreter)
-        string(REPLACE "x86" "x64" Python3_EXECUTABLE "${Python3_EXECUTABLE}")
-
         set(WITH_TESTS "--with-tests")
-        set(CDB_OPTION "--no-cdb")
-        set(ELFUTILS_OPTION)
 
         execute_process(
           COMMAND python
@@ -255,11 +250,6 @@ jobs:
             --build build
             --qt-path "${{ steps.qt.outputs.qt_dir }}"
             --qtc-path "${{ steps.qt_creator.outputs.qtc_dir }}"
-            --python3 "${Python3_EXECUTABLE}"
-            ${WITH_TESTS}
-            ${CDB_OPTION}
-            ${ELFUTILS_OPTION}
-            ${NO_DMG}
             --output-path "$ENV{GITHUB_WORKSPACE}"
           RESULT_VARIABLE result
         )
