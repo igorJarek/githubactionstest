@@ -44,7 +44,9 @@ if (WITH_TESTS)
   enable_testing()
 endif()
 
-extend_qtc_plugin(Githubactionstest
-  CONDITION WITH_TESTS
-  SOURCES tests/test.cpp
-  )
+if (WITH_TESTS)
+    add_qtc_test(Test
+      DEPENDS Qt6::Core
+      SOURCES tests/test.cpp
+    )
+endif()
