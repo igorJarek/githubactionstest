@@ -239,7 +239,7 @@ jobs:
           endif()
         endforeach()
 
-        set(WITH_TESTS "--with-tests")
+        set(WITH_TESTS ON)
 
         execute_process(
           COMMAND python
