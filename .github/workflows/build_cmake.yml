@@ -260,9 +260,34 @@ jobs:
           message(FATAL_ERROR "Build failed")
         endif()
 
-        message("github.ref : ${{ github.ref }}")
-        message("github.ref_name : ${{ github.ref_name }}")
-        message("github.ref_type : ${{ github.ref_type }}")
+    - name: Run tests
+      shell: cmake -P {0}
+      run: |
+        set(ENV{QT_QPA_PLATFORM} "offscreen")
+        if ("${{ runner.os }}" STREQUAL "Linux")
+            set(plugin_filepath "$ENV{GITHUB_WORKSPACE}/build/build/lib/qtcreator/plugins/libAsn1Acn.so")
+            set(qtc_plugin_path ${{ steps.qt_creator.outputs.qtc_dir }}/lib/qtcreator/plugins)
+        elseif("${{ runner.os }}" STREQUAL "Windows")
+            set(plugin_filepath "$ENV{GITHUB_WORKSPACE}/build/build/lib/qtcreator/plugins/Asn1Acn.dll")
+            set(qtc_plugin_path ${{ steps.qt_creator.outputs.qtc_dir }}/lib/qtcreator/plugins)
+        elseif("${{ runner.os }}" STREQUAL "macOS")
+            set(plugin_filepath "$ENV{GITHUB_WORKSPACE}/build/build/Qt Creator.app/Contents/PlugIns/libAsn1Acn.dylib")
+              set(qtc_plugin_path ${{ steps.qt_creator.outputs.qtc_dir }}/Contents/PlugIns)
+        endif()
+        file(COPY ${plugin_filepath} DESTINATION ${qtc_plugin_path})
+        execute_process(
+          COMMAND qtcreator -test "ASN.1/ACN"
+          RESULT_VARIABLE result
+          OUTPUT_VARIABLE output
+          ERROR_VARIABLE error
+          ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
+          TIMEOUT 600
+        )
+        
+        message("RESULT -->>${result}<<--")
+        message("OUTPUT -->>${output}<<--")
+        message("ERROR -->>${error}<<--")
+        message("ECHO_ERROR_VARIABLE -->> ${ECHO_ERROR_VARIABLE} <<--")
 
     - uses: actions/upload-artifact@v2
       id: upload_artifact
@@ -298,6 +323,7 @@ jobs:
 
   publish:
     if: ${{ github.ref_type == 'tag' }}
+    needs: release
 
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
@@ -316,7 +342,6 @@ jobs:
             name: "macOS Latest x64", artifact: "macOS-x64.7z",
             os: macos-latest
           }
-    needs: release
 
     steps:
     - name: Download artifact
