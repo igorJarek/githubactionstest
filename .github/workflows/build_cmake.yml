@@ -260,6 +260,10 @@ jobs:
           message(FATAL_ERROR "Build failed")
         endif()
 
+        message("github.ref : ${{ github.ref }}")
+        message("github.ref_name : ${{ github.ref_name }}")
+        message("github.ref_type : ${{ github.ref_type }}")
+
     - uses: actions/upload-artifact@v2
       id: upload_artifact
       with:
